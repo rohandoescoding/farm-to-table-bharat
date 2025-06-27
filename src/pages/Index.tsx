@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,8 @@ import {
   TrendingUp,
   ArrowRight,
   Leaf,
-  MapPin
+  MapPin,
+  Package
 } from 'lucide-react';
 
 const Index = () => {
