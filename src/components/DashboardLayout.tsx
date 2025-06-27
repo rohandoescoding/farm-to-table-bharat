@@ -11,7 +11,8 @@ import {
   Settings,
   Plus,
   ListChecks,
-  TrendingUp
+  TrendingUp,
+  Shield
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -46,6 +47,7 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           { icon: Users, label: 'Farmers', href: '/admin/farmers' },
           { icon: Package, label: 'Products', href: '/admin/products' },
           { icon: ShoppingCart, label: 'Orders', href: '/admin/orders' },
+          { icon: Shield, label: 'Approvals', href: '/admin/approvals' },
           { icon: BarChart3, label: 'Analytics', href: '/admin/analytics' },
           { icon: Settings, label: 'Settings', href: '/admin/settings' }
         ];
