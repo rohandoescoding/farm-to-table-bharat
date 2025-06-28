@@ -1,10 +1,9 @@
-
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Leaf, Apple, Wheat, Droplets, Seedling, Milk } from "lucide-react";
+import { Leaf, Apple, Wheat, Droplets, Sprout, Milk } from "lucide-react";
 
 const Categories = () => {
   const categories = [
@@ -39,7 +38,7 @@ const Categories = () => {
       id: "herbs",
       name: "Herbs & Spices",
       description: "Aromatic herbs and spices for cooking",
-      icon: Seedling,
+      icon: Sprout,
       color: "bg-purple-100 text-purple-800",
       count: 24,
       featured: ["Basil", "Coriander", "Mint", "Turmeric"]
