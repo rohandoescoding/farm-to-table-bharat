@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Marketplace from "./pages/Marketplace";
+import Categories from "./pages/Categories";
+import Deals from "./pages/Deals";
+import WhatsNew from "./pages/WhatsNew";
+import Order from "./pages/Order";
+import Delivery from "./pages/Delivery";
+import Support from "./pages/Support";
+import FarmerEarnings from "./pages/FarmerEarnings";
 import FarmerDashboard from "./pages/FarmerDashboard";
 import BuyerDashboard from "./pages/BuyerDashboard";
 import Login from "./pages/Login";
@@ -29,6 +37,13 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/deals" element={<Deals />} />
+          <Route path="/whats-new" element={<WhatsNew />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/farmer/earnings" element={<FarmerEarnings />} />
           <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
           <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
           <Route path="/farmer/add-product" element={<AddProduct />} />

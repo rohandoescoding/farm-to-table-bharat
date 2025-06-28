@@ -22,11 +22,12 @@ const Marketplace = () => {
     sortBy: "newest"
   });
 
-  // Mock data
+  // Mock data with diverse products
   const categories = ["Vegetables", "Fruits", "Grains", "Herbs", "Seeds", "Dairy"];
-  const locations = ["Maharashtra", "Karnataka", "Punjab", "Tamil Nadu", "Gujarat"];
+  const locations = ["Maharashtra", "Karnataka", "Punjab", "Tamil Nadu", "Gujarat", "Rajasthan"];
   
   const products = [
+    // Vegetables
     {
       id: "1",
       name: "Organic Tomatoes",
@@ -63,6 +64,25 @@ const Marketplace = () => {
     },
     {
       id: "3",
+      name: "Purple Cabbage",
+      price: 40,
+      unit: "kg",
+      quantity: 60,
+      category: "Vegetables",
+      description: "Nutrient-rich purple cabbage perfect for salads",
+      image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400",
+      farmer: {
+        name: "Rainbow Farms",
+        location: "Punjab",
+        rating: 4.7
+      },
+      harvestDate: "2024-01-13",
+      organic: true
+    },
+    
+    // Fruits
+    {
+      id: "4",
       name: "Organic Apples",
       price: 120,
       unit: "kg",
@@ -76,6 +96,167 @@ const Marketplace = () => {
         rating: 4.9
       },
       harvestDate: "2024-01-10",
+      organic: true
+    },
+    {
+      id: "5",
+      name: "Fresh Mangoes",
+      price: 180,
+      unit: "kg",
+      quantity: 100,
+      category: "Fruits",
+      description: "Sweet Alphonso mangoes directly from orchards",
+      image: "https://images.unsplash.com/photo-1553279546-cacc14f1a4b5?w=400",
+      farmer: {
+        name: "Tropical Gardens",
+        location: "Maharashtra",
+        rating: 4.8
+      },
+      harvestDate: "2024-01-12",
+      organic: false
+    },
+    {
+      id: "6",
+      name: "Dragon Fruit",
+      price: 150,
+      unit: "kg",
+      quantity: 25,
+      category: "Fruits",
+      description: "Exotic dragon fruit rich in antioxidants",
+      image: "https://images.unsplash.com/photo-1526318472351-c75fcf070305?w=400",
+      farmer: {
+        name: "Exotic Fruits Farm",
+        location: "Karnataka",
+        rating: 4.9
+      },
+      harvestDate: "2024-01-16",
+      organic: true
+    },
+    
+    // Grains
+    {
+      id: "7",
+      name: "Premium Basmati Rice",
+      price: 85,
+      unit: "kg",
+      quantity: 500,
+      category: "Grains",
+      description: "Aromatic basmati rice directly from Punjab fields",
+      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
+      farmer: {
+        name: "Golden Fields",
+        location: "Punjab",
+        rating: 4.7
+      },
+      harvestDate: "2024-01-08",
+      organic: false
+    },
+    {
+      id: "8",
+      name: "Organic Wheat",
+      price: 65,
+      unit: "kg",
+      quantity: 300,
+      category: "Grains",
+      description: "Premium organic wheat flour quality grain",
+      image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=400",
+      farmer: {
+        name: "Harvest Gold",
+        location: "Rajasthan",
+        rating: 4.6
+      },
+      harvestDate: "2024-01-05",
+      organic: true
+    },
+    {
+      id: "9",
+      name: "Black Quinoa",
+      price: 200,
+      unit: "kg",
+      quantity: 30,
+      category: "Grains",
+      description: "Premium black quinoa superfood packed with protein",
+      image: "https://images.unsplash.com/photo-1578662015460-ceeebf3f8d43?w=400",
+      farmer: {
+        name: "Healthy Grains Co",
+        location: "Gujarat",
+        rating: 4.8
+      },
+      harvestDate: "2024-01-14",
+      organic: true
+    },
+    
+    // Herbs
+    {
+      id: "10",
+      name: "Fresh Basil",
+      price: 25,
+      unit: "bunch",
+      quantity: 40,
+      category: "Herbs",
+      description: "Aromatic basil leaves perfect for cooking",
+      image: "https://images.unsplash.com/photo-1618160718220-09b6bce6e88b?w=400",
+      farmer: {
+        name: "Herb Haven",
+        location: "Tamil Nadu",
+        rating: 4.9
+      },
+      harvestDate: "2024-01-16",
+      organic: true
+    },
+    {
+      id: "11",
+      name: "Organic Mint",
+      price: 20,
+      unit: "bunch",
+      quantity: 35,
+      category: "Herbs",
+      description: "Fresh mint leaves for tea and cooking",
+      image: "https://images.unsplash.com/photo-1628556270448-4d83ec5ef9d8?w=400",
+      farmer: {
+        name: "Green Herbs Farm",
+        location: "Maharashtra",
+        rating: 4.7
+      },
+      harvestDate: "2024-01-15",
+      organic: true
+    },
+    
+    // Seeds
+    {
+      id: "12",
+      name: "Sunflower Seeds",
+      price: 120,
+      unit: "kg",
+      quantity: 50,
+      category: "Seeds",
+      description: "Premium sunflower seeds for snacking and planting",
+      image: "https://images.unsplash.com/photo-1549454942-7f29c80339c4?w=400",
+      farmer: {
+        name: "Seed Specialists",
+        location: "Karnataka",
+        rating: 4.8
+      },
+      harvestDate: "2024-01-11",
+      organic: false
+    },
+    
+    // Dairy
+    {
+      id: "13",
+      name: "Farm Fresh Milk",
+      price: 60,
+      unit: "liter",
+      quantity: 100,
+      category: "Dairy",
+      description: "Pure cow milk from grass-fed cows",
+      image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
+      farmer: {
+        name: "Dairy Direct",
+        location: "Punjab",
+        rating: 4.9
+      },
+      harvestDate: "2024-01-16",
       organic: true
     }
   ];
@@ -126,7 +307,7 @@ const Marketplace = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Marketplace</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">🛒 Marketplace</h1>
           <p className="text-gray-600">Discover fresh, local produce directly from farmers</p>
         </div>
 
@@ -202,7 +383,14 @@ const Marketplace = () => {
                     onClick={() => handleFilter({ ...filters, category })}
                     className="p-4 text-center border rounded-lg hover:bg-gray-50 transition-colors"
                   >
-                    <div className="text-2xl mb-2">🥬</div>
+                    <div className="text-2xl mb-2">
+                      {category === 'Vegetables' && '🥬'}
+                      {category === 'Fruits' && '🍎'}
+                      {category === 'Grains' && '🌾'}
+                      {category === 'Herbs' && '🌿'}
+                      {category === 'Seeds' && '🌰'}
+                      {category === 'Dairy' && '🥛'}
+                    </div>
                     <p className="text-sm font-medium">{category}</p>
                   </button>
                 ))}
