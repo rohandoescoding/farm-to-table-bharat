@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -74,13 +73,16 @@ const UserProfile = ({ userRole }: UserProfileProps) => {
   };
 
   const handleNestedChange = (section: 'notifications' | 'privacy', field: string, value: any) => {
-    setProfile(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
-      }
-    }));
+    setProfile(prev => {
+      const currentSection = prev[section];
+      return {
+        ...prev,
+        [section]: {
+          ...currentSection,
+          [field]: value
+        }
+      };
+    });
   };
 
   const getInitials = (name: string) => {
