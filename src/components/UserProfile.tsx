@@ -73,11 +73,11 @@ const UserProfile = ({ userRole }: UserProfileProps) => {
     }));
   };
 
-  const handleNestedChange = (section: string, field: string, value: any) => {
+  const handleNestedChange = (section: 'notifications' | 'privacy', field: string, value: any) => {
     setProfile(prev => ({
       ...prev,
       [section]: {
-        ...prev[section as keyof typeof prev],
+        ...prev[section],
         [field]: value
       }
     }));

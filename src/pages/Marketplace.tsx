@@ -28,45 +28,56 @@ const Marketplace = () => {
   
   const products = [
     {
-      id: 1,
+      id: "1",
       name: "Organic Tomatoes",
-      farmer: "Green Valley Farm",
       price: 45,
       unit: "kg",
-      image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
-      rating: 4.8,
-      location: "Maharashtra",
+      quantity: 150,
       category: "Vegetables",
-      inStock: true,
-      quantity: 150
+      description: "Fresh organic tomatoes grown without pesticides",
+      image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
+      farmer: {
+        name: "Green Valley Farm",
+        location: "Maharashtra",
+        rating: 4.8
+      },
+      harvestDate: "2024-01-15",
+      organic: true
     },
     {
-      id: 2,
+      id: "2",
       name: "Fresh Spinach",
-      farmer: "Leafy Greens Co",
       price: 30,
       unit: "kg",
-      image: "https://images.unsplash.com/photo-1576045057995-568f588f8dfd?w=400",
-      rating: 4.6,
-      location: "Karnataka",
+      quantity: 80,
       category: "Vegetables",
-      inStock: true,
-      quantity: 80
+      description: "Crisp and fresh spinach leaves packed with nutrients",
+      image: "https://images.unsplash.com/photo-1576045057995-568f588f8dfd?w=400",
+      farmer: {
+        name: "Leafy Greens Co",
+        location: "Karnataka",
+        rating: 4.6
+      },
+      harvestDate: "2024-01-14",
+      organic: false
     },
     {
-      id: 3,
+      id: "3",
       name: "Organic Apples",
-      farmer: "Hill Station Orchards",
       price: 120,
       unit: "kg",
-      image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
-      rating: 4.9,
-      location: "Punjab",
+      quantity: 200,
       category: "Fruits",
-      inStock: true,
-      quantity: 200
-    },
-    // Add more mock products...
+      description: "Sweet and juicy organic apples from hill stations",
+      image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+      farmer: {
+        name: "Hill Station Orchards",
+        location: "Punjab",
+        rating: 4.9
+      },
+      harvestDate: "2024-01-10",
+      organic: true
+    }
   ];
 
   const handleSearch = (query: string) => {
@@ -79,16 +90,21 @@ const Marketplace = () => {
     console.log("Applying filters:", newFilters);
   };
 
+  const handleAddToCart = (productId: string) => {
+    console.log("Adding product to cart:", productId);
+    // Add cart logic here
+  };
+
   // Filter and sort products based on current filters and search
   const filteredProducts = products
     .filter(product => {
       const matchesSearch = searchQuery === "" || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.farmer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.location.toLowerCase().includes(searchQuery.toLowerCase());
+        product.farmer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.farmer.location.toLowerCase().includes(searchQuery.toLowerCase());
       
       const matchesCategory = filters.category === "" || product.category === filters.category;
-      const matchesLocation = filters.location === "" || product.location === filters.location;
+      const matchesLocation = filters.location === "" || product.farmer.location === filters.location;
       const matchesPrice = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
       
       return matchesSearch && matchesCategory && matchesLocation && matchesPrice;
@@ -97,9 +113,9 @@ const Marketplace = () => {
       switch (filters.sortBy) {
         case "price-low": return a.price - b.price;
         case "price-high": return b.price - a.price;
-        case "rating": return b.rating - a.rating;
+        case "rating": return b.farmer.rating - a.farmer.rating;
         case "popular": return b.quantity - a.quantity;
-        default: return b.id - a.id; // newest first
+        default: return parseInt(b.id) - parseInt(a.id); // newest first
       }
     });
 
@@ -155,15 +171,9 @@ const Marketplace = () => {
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
-                id={product.id}
-                name={product.name}
-                farmer={product.farmer}
-                price={product.price}
-                unit={product.unit}
-                image={product.image}
-                rating={product.rating}
-                location={product.location}
-                inStock={product.inStock}
+                product={product}
+                onAddToCart={handleAddToCart}
+                showFarmerInfo={true}
               />
             ))}
           </div>
