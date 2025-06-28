@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,9 +15,12 @@ import {
   Clock,
   Eye,
   ThumbsUp,
-  ThumbsDown
+  ThumbsDown,
+  Flag,
+  Shield
 } from 'lucide-react';
 import { toast } from 'sonner';
+import AdminQualityControl from '@/components/AdminQualityControl';
 
 const AdminDashboard = () => {
   const [pendingProducts, setPendingProducts] = useState([
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
         {/* Header */}
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600">Manage the AgriDirect platform</p>
+          <p className="text-gray-600">Manage the AgriDirect platform and ensure quality standards</p>
         </div>
 
         {/* Stats Cards */}
@@ -123,12 +125,51 @@ const AdminDashboard = () => {
           </Card>
         </div>
 
+        {/* Enhanced Quality Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <Card className="border-yellow-200 bg-yellow-50">
+            <CardContent className="p-4 text-center">
+              <Flag className="w-8 h-8 text-yellow-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-yellow-800">5</div>
+              <p className="text-sm text-yellow-700">Flagged Products</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-red-200 bg-red-50">
+            <CardContent className="p-4 text-center">
+              <Shield className="w-8 h-8 text-red-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-red-800">3</div>
+              <p className="text-sm text-red-700">Refund Requests</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-green-200 bg-green-50">
+            <CardContent className="p-4 text-center">
+              <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-green-800">24</div>
+              <p className="text-sm text-green-700">Quality Badges</p>
+            </CardContent>
+          </Card>
+          
+          <Card className="border-blue-200 bg-blue-50">
+            <CardContent className="p-4 text-center">
+              <TrendingUp className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-blue-800">4.6</div>
+              <p className="text-sm text-blue-700">Avg Platform Rating</p>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Main Content Tabs */}
         <Tabs defaultValue="approvals" className="space-y-4">
-          <TabsList>
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="approvals" className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
               Pending Approvals ({pendingProducts.length})
+            </TabsTrigger>
+            <TabsTrigger value="quality" className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              Quality Control
             </TabsTrigger>
             <TabsTrigger value="analytics">
               <TrendingUp className="w-4 h-4 mr-2" />
@@ -211,6 +252,10 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="quality" className="space-y-4">
+            <AdminQualityControl />
+          </TabsContent>
+
           <TabsContent value="analytics" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
@@ -231,31 +276,35 @@ const AdminDashboard = () => {
                       <span className="text-sm">Products Listed</span>
                       <span className="font-semibold">+45 this month</span>
                     </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm">Quality Score</span>
+                      <span className="font-semibold text-green-600">4.6/5 ⭐</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Popular Categories</CardTitle>
+                  <CardTitle>Quality Metrics</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Vegetables</span>
-                      <span className="font-semibold">45%</span>
+                      <span className="text-sm">Refund Rate</span>
+                      <span className="font-semibold text-green-600">2.1%</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Fruits</span>
-                      <span className="font-semibold">28%</span>
+                      <span className="text-sm">Quality Badges</span>
+                      <span className="font-semibold">24 active</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Grains</span>
-                      <span className="font-semibold">18%</span>
+                      <span className="text-sm">Avg Response Time</span>
+                      <span className="font-semibold">4.2 hours</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm">Others</span>
-                      <span className="font-semibold">9%</span>
+                      <span className="text-sm">Customer Satisfaction</span>
+                      <span className="font-semibold text-green-600">94%</span>
                     </div>
                   </div>
                 </CardContent>
@@ -273,21 +322,21 @@ const AdminDashboard = () => {
                   <div className="flex justify-between items-center p-3 border rounded">
                     <div>
                       <p className="font-medium">Ravi Kumar (Farmer)</p>
-                      <p className="text-sm text-gray-600">Added 3 new products</p>
+                      <p className="text-sm text-gray-600">Added 3 new products with videos</p>
                     </div>
                     <span className="text-xs text-gray-500">2 hours ago</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded">
                     <div>
                       <p className="font-medium">Priya Sharma (Buyer)</p>
-                      <p className="text-sm text-gray-600">Placed order worth ₹2,500</p>
+                      <p className="text-sm text-gray-600">Left 5-star review with photos</p>
                     </div>
                     <span className="text-xs text-gray-500">4 hours ago</span>
                   </div>
                   <div className="flex justify-between items-center p-3 border rounded">
                     <div>
                       <p className="font-medium">Amit Singh (Farmer)</p>
-                      <p className="text-sm text-gray-600">Updated inventory for 5 products</p>
+                      <p className="text-sm text-gray-600">Earned Quality Assured badge</p>
                     </div>
                     <span className="text-xs text-gray-500">6 hours ago</span>
                   </div>
