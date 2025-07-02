@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { Flag, Shield, AlertTriangle, CheckCircle, XCircle, Eye } from 'lucide-react';
+import { Flag, Shield, AlertTriangle, CheckCircle, XCircle, Eye, Star } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface FlaggedProduct {
