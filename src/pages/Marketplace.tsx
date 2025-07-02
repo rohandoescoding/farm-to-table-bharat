@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
@@ -263,17 +262,10 @@ const Marketplace = () => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    console.log("Searching for:", query);
   };
 
   const handleFilter = (newFilters: FilterOptions) => {
     setFilters(newFilters);
-    console.log("Applying filters:", newFilters);
-  };
-
-  const handleAddToCart = (productId: string) => {
-    console.log("Adding product to cart:", productId);
-    // Add cart logic here
   };
 
   // Filter and sort products based on current filters and search
@@ -353,7 +345,6 @@ const Marketplace = () => {
               <ProductCard
                 key={product.id}
                 product={product}
-                onAddToCart={handleAddToCart}
                 showFarmerInfo={true}
               />
             ))}

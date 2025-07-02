@@ -1,7 +1,9 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import NotificationCenter from "@/components/NotificationCenter";
+import { useCart } from "@/contexts/CartContext";
 import { ShoppingCart, User } from "lucide-react";
 
 // Mock user state - in a real app, this would come from authentication context
@@ -12,6 +14,7 @@ const mockUser = {
 
 const Header = () => {
   const { isAuthenticated, role } = mockUser;
+  const { getTotalItems } = useCart();
 
   // Navigation items for different user states
   const getNavigationItems = () => {
@@ -28,9 +31,10 @@ const Header = () => {
       // Default navigation for unauthenticated users and buyers
       return [
         { to: "/categories", label: "Categories" },
+        { to: "/farmers", label: "Farmers" },
         { to: "/deals", label: "Deals" },
         { to: "/whats-new", label: "What's New" },
-        { to: "/order", label: "Order" },
+        { to: "/orders", label: "Orders" },
         { to: "/delivery", label: "Delivery" }
       ];
     }
@@ -67,9 +71,14 @@ const Header = () => {
           <div className="flex items-center space-x-4">
             <NotificationCenter />
             
-            <Link to="/cart">
+            <Link to="/cart" className="relative">
               <Button variant="ghost" size="sm">
                 <ShoppingCart className="h-5 w-5" />
+                {getTotalItems() > 0 && (
+                  <Badge className="absolute -top-2 -right-2 bg-green-600 text-white min-w-[20px] h-5 flex items-center justify-center text-xs">
+                    {getTotalItems()}
+                  </Badge>
+                )}
               </Button>
             </Link>
 

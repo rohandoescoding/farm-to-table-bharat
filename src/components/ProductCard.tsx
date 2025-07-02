@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingCart, MapPin, Calendar, Star } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 
 interface Product {
   id: string;
@@ -26,21 +27,23 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart?: (productId: string) => void;
   showFarmerInfo?: boolean;
 }
 
-const ProductCard = ({ product, onAddToCart, showFarmerInfo = true }: ProductCardProps) => {
+const ProductCard = ({ product, showFarmerInfo = true }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   const handleAddToCart = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click when adding to cart
-    if (onAddToCart) {
-      setIsLoading(true);
-      await onAddToCart(product.id);
-      setIsLoading(false);
-    }
+    e.stopPropagation();
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    addToCart(product);
+    setIsLoading(false);
   };
 
   const handleCardClick = () => {

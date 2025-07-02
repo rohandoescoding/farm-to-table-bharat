@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Sparkles, TrendingUp, Users } from "lucide-react";
 
 const WhatsNew = () => {
+  const navigate = useNavigate();
+
   const newProducts = [
     {
       id: "new-1",
@@ -69,7 +72,7 @@ const WhatsNew = () => {
 
   const newFarmers = [
     {
-      id: 1,
+      id: '4',
       name: "Sunrise Organic Farm",
       location: "Tamil Nadu",
       speciality: "Organic Vegetables",
@@ -78,7 +81,7 @@ const WhatsNew = () => {
       products: 12
     },
     {
-      id: 2,
+      id: '5',
       name: "Mountain Fresh Fruits",
       location: "Himachal Pradesh",
       speciality: "Hill Station Fruits",
@@ -112,8 +115,16 @@ const WhatsNew = () => {
     }
   ];
 
-  const handleAddToCart = (productId: string) => {
-    console.log("Adding new product to cart:", productId);
+  const handleViewAllProducts = () => {
+    navigate('/marketplace?filter=new');
+  };
+
+  const handleViewFarmerProfile = (farmerId: string) => {
+    navigate(`/farmers/${farmerId}`);
+  };
+
+  const handleViewAllFarmers = () => {
+    navigate('/farmers?filter=newest');
   };
 
   return (
@@ -184,7 +195,6 @@ const WhatsNew = () => {
                 </div>
                 <ProductCard
                   product={product}
-                  onAddToCart={handleAddToCart}
                   showFarmerInfo={true}
                 />
               </div>
@@ -192,7 +202,12 @@ const WhatsNew = () => {
           </div>
           
           <div className="text-center">
-            <Button size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-green-600 text-green-600 hover:bg-green-50"
+              onClick={handleViewAllProducts}
+            >
               View All New Products
             </Button>
           </div>
@@ -203,7 +218,11 @@ const WhatsNew = () => {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">👨‍🌾 Welcome New Farmers</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {newFarmers.map((farmer) => (
-              <Card key={farmer.id} className="border-green-100">
+              <Card 
+                key={farmer.id} 
+                className="border-green-100 hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => handleViewFarmerProfile(farmer.id)}
+              >
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div>
@@ -230,12 +249,29 @@ const WhatsNew = () => {
                       <span className="font-medium">⭐ {farmer.rating}</span>
                     </div>
                   </div>
-                  <Button className="w-full mt-4 bg-green-600 hover:bg-green-700">
-                    View Products
+                  <Button 
+                    className="w-full mt-4 bg-green-600 hover:bg-green-700"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleViewFarmerProfile(farmer.id);
+                    }}
+                  >
+                    View Profile & Products
                   </Button>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          <div className="text-center mt-6">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+              onClick={handleViewAllFarmers}
+            >
+              View All Farmers
+            </Button>
           </div>
         </div>
 

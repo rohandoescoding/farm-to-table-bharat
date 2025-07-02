@@ -1,93 +1,17 @@
 
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import { toast } from 'sonner';
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  unit: string;
-  quantity: number;
-  image: string;
-  farmer: {
-    name: string;
-    location: string;
-  };
-  maxQuantity: number;
-}
+import { useCart } from '@/contexts/CartContext';
 
 const Cart = () => {
   const navigate = useNavigate();
-  
-  // Mock cart data - this would come from global state management
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: '1',
-      name: 'Organic Tomatoes',
-      price: 45,
-      unit: 'kg',
-      quantity: 2,
-      image: '/placeholder.svg',
-      farmer: {
-        name: 'Ravi Kumar',
-        location: 'Bangalore, Karnataka'
-      },
-      maxQuantity: 50
-    },
-    {
-      id: '2',
-      name: 'Basmati Rice',
-      price: 120,
-      unit: 'kg',
-      quantity: 5,
-      image: '/placeholder.svg',
-      farmer: {
-        name: 'Harpreet Singh',
-        location: 'Amritsar, Punjab'
-      },
-      maxQuantity: 100
-    }
-  ]);
-
-  const updateQuantity = (id: string, newQuantity: number) => {
-    const item = cartItems.find(item => item.id === id);
-    if (!item) return;
-    
-    if (newQuantity < 1) {
-      removeItem(id);
-      return;
-    }
-    
-    if (newQuantity > item.maxQuantity) {
-      toast.error(`Maximum available quantity is ${item.maxQuantity} ${item.unit}`);
-      return;
-    }
-
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-    toast.success('Item removed from cart');
-  };
-
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
+  const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart();
 
   const handleCheckout = () => {
     if (cartItems.length === 0) {
-      toast.error('Your cart is empty');
       return;
     }
     navigate('/checkout');
@@ -172,7 +96,7 @@ const Cart = () => {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeFromCart(item.id)}
                         className="text-red-600 hover:text-red-700 hover:bg-red-50"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -193,7 +117,7 @@ const Cart = () => {
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between">
                     <span>Subtotal ({cartItems.length} items)</span>
-                    <span>₹{calculateTotal().toFixed(2)}</span>
+                    <span>₹{getTotalPrice().toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Delivery Fee</span>
@@ -204,7 +128,7 @@ const Cart = () => {
                 <div className="border-t pt-4 mb-6">
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span className="text-green-600">₹{calculateTotal().toFixed(2)}</span>
+                    <span className="text-green-600">₹{getTotalPrice().toFixed(2)}</span>
                   </div>
                 </div>
                 
