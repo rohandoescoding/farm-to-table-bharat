@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import NotificationCenter from "@/components/NotificationCenter";
@@ -15,6 +15,7 @@ const mockUser = {
 const Header = () => {
   const { isAuthenticated, role } = mockUser;
   const { getTotalItems } = useCart();
+  const location = useLocation();
 
   // Navigation items for different user states
   const getNavigationItems = () => {
@@ -42,6 +43,10 @@ const Header = () => {
 
   const navigationItems = getNavigationItems();
 
+  const isActiveRoute = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
+
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="container mx-auto px-4 py-4">
@@ -60,7 +65,11 @@ const Header = () => {
               <Link 
                 key={item.to}
                 to={item.to} 
-                className="text-gray-700 hover:text-green-600 transition-colors"
+                className={`transition-colors ${
+                  isActiveRoute(item.to)
+                    ? 'text-green-600 font-semibold border-b-2 border-green-600 pb-1'
+                    : 'text-gray-700 hover:text-green-600'
+                }`}
               >
                 {item.label}
               </Link>

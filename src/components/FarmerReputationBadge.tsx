@@ -1,143 +1,117 @@
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Star, Shield, Award, CheckCircle } from 'lucide-react';
+import { Star, CheckCircle, Clock, Award } from 'lucide-react';
 
-interface FarmerReputation {
+interface ReputationData {
   farmerId: string;
   farmerName: string;
   totalOrders: number;
-  fulfillmentRate: number; // percentage
+  fulfillmentRate: number;
   averageRating: number;
-  returnRate: number; // percentage
-  responseTime: string; // e.g., "< 2 hours"
+  returnRate: number;
+  responseTime: string;
   qualityBadges: string[];
   joinedDate: string;
 }
 
 interface FarmerReputationBadgeProps {
-  reputation: FarmerReputation;
+  reputation: ReputationData;
   showDetails?: boolean;
 }
 
 const FarmerReputationBadge = ({ reputation, showDetails = false }: FarmerReputationBadgeProps) => {
   const getReputationLevel = () => {
-    if (reputation.averageRating >= 4.5 && reputation.fulfillmentRate >= 95) {
-      return { level: 'Premium', color: 'bg-gradient-to-r from-yellow-400 to-orange-500', icon: Award };
-    } else if (reputation.averageRating >= 4.0 && reputation.fulfillmentRate >= 90) {
-      return { level: 'Verified', color: 'bg-green-500', icon: Shield };
-    } else if (reputation.averageRating >= 3.5 && reputation.fulfillmentRate >= 80) {
-      return { level: 'Trusted', color: 'bg-blue-500', icon: CheckCircle };
+    const { fulfillmentRate, averageRating, returnRate } = reputation;
+    
+    if (fulfillmentRate >= 95 && averageRating >= 4.5 && returnRate <= 5) {
+      return { level: 'Excellent', color: 'bg-green-100 text-green-800', icon: '🏆' };
+    } else if (fulfillmentRate >= 90 && averageRating >= 4.0 && returnRate <= 10) {
+      return { level: 'Good', color: 'bg-blue-100 text-blue-800', icon: '⭐' };
+    } else {
+      return { level: 'Average', color: 'bg-yellow-100 text-yellow-800', icon: '📊' };
     }
-    return { level: 'New', color: 'bg-gray-400', icon: Star };
   };
 
-  const { level, color, icon: Icon } = getReputationLevel();
-
-  const hasQualityAssuranceBadge = () => {
-    return reputation.averageRating >= 4.5 && 
-           reputation.fulfillmentRate >= 95 && 
-           reputation.returnRate <= 5;
-  };
+  const reputationLevel = getReputationLevel();
 
   if (!showDetails) {
     return (
-      <div className="flex items-center gap-2">
-        <Badge className={`${color} text-white`}>
-          <Icon className="w-3 h-3 mr-1" />
-          {level} Farmer
-        </Badge>
-        <div className="flex items-center gap-1">
-          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-          <span className="text-sm font-medium">{reputation.averageRating.toFixed(1)}</span>
-        </div>
-        {hasQualityAssuranceBadge() && (
-          <Badge className="bg-purple-100 text-purple-800">
-            <Shield className="w-3 h-3 mr-1" />
-            Quality Assured
-          </Badge>
-        )}
-      </div>
+      <Badge className={reputationLevel.color}>
+        {reputationLevel.icon} {reputationLevel.level} Reputation
+      </Badge>
     );
   }
 
   return (
     <Card className="border-green-100">
-      <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className={`w-12 h-12 rounded-full ${color} flex items-center justify-center`}>
-              <Icon className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold">{reputation.farmerName}</h3>
-              <Badge className={`${color} text-white`}>{level} Farmer</Badge>
-            </div>
+      <CardHeader>
+        <CardTitle className="text-lg flex items-center gap-2">
+          <Award className="h-5 w-5 text-green-600" />
+          Farmer Reputation
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="text-center">
+          <Badge className={`${reputationLevel.color} text-lg py-2 px-4`}>
+            {reputationLevel.icon} {reputationLevel.level}
+          </Badge>
+        </div>
+
+        <div className="space-y-3">
+          <div className="flex justify-between">
+            <span className="text-gray-600">Orders Completed</span>
+            <span className="font-medium">{reputation.totalOrders}</span>
           </div>
           
-          {hasQualityAssuranceBadge() && (
-            <Badge className="bg-purple-100 text-purple-800">
-              <Shield className="w-4 h-4 mr-1" />
-              Quality Assured
-            </Badge>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Rating:</span>
-              <div className="flex items-center gap-1">
-                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-medium">{reputation.averageRating.toFixed(1)}/5</span>
-              </div>
-            </div>
-            
-            <div className="flex justify-between">
-              <span className="text-gray-600">Orders:</span>
-              <span className="font-medium">{reputation.totalOrders}</span>
-            </div>
-            
-            <div className="flex justify-between">
-              <span className="text-gray-600">Member since:</span>
-              <span className="font-medium">{reputation.joinedDate}</span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Fulfillment:</span>
-              <span className={`font-medium ${reputation.fulfillmentRate >= 90 ? 'text-green-600' : 'text-orange-600'}`}>
+          <div className="flex justify-between">
+            <span className="text-gray-600">Fulfillment Rate</span>
+            <div className="flex items-center gap-1">
+              <span className={`font-medium ${reputation.fulfillmentRate >= 95 ? 'text-green-600' : 'text-orange-600'}`}>
                 {reputation.fulfillmentRate}%
               </span>
+              {reputation.fulfillmentRate >= 95 && <CheckCircle className="w-4 h-4 text-green-600" />}
             </div>
-            
-            <div className="flex justify-between">
-              <span className="text-gray-600">Response:</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600">Average Rating</span>
+            <div className="flex items-center gap-1">
+              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+              <span className="font-medium">{reputation.averageRating}</span>
+            </div>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600">Response Time</span>
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4 text-blue-500" />
               <span className="font-medium">{reputation.responseTime}</span>
             </div>
-            
-            <div className="flex justify-between">
-              <span className="text-gray-600">Return Rate:</span>
-              <span className={`font-medium ${reputation.returnRate <= 5 ? 'text-green-600' : 'text-red-600'}`}>
-                {reputation.returnRate}%
-              </span>
-            </div>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-gray-600">Return Rate</span>
+            <span className={`font-medium ${reputation.returnRate <= 5 ? 'text-green-600' : 'text-red-600'}`}>
+              {reputation.returnRate}%
+            </span>
           </div>
         </div>
 
-        {reputation.qualityBadges.length > 0 && (
-          <div className="mt-4">
-            <p className="text-sm text-gray-600 mb-2">Quality Badges:</p>
-            <div className="flex flex-wrap gap-1">
-              {reputation.qualityBadges.map((badge, index) => (
-                <Badge key={index} variant="outline" className="text-xs">
-                  {badge}
-                </Badge>
-              ))}
-            </div>
+        <div>
+          <h4 className="font-medium text-gray-900 mb-2">Quality Badges</h4>
+          <div className="flex flex-wrap gap-1">
+            {reputation.qualityBadges.map((badge, index) => (
+              <Badge key={index} variant="outline" className="text-xs">
+                {badge}
+              </Badge>
+            ))}
           </div>
-        )}
+        </div>
+
+        <div className="text-center pt-2 border-t">
+          <p className="text-sm text-gray-500">Member since {reputation.joinedDate}</p>
+        </div>
       </CardContent>
     </Card>
   );

@@ -1,215 +1,140 @@
 
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import Header from '@/components/Header';
-import ProductCard from '@/components/ProductCard';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { 
-  Search, 
-  Truck, 
-  Shield, 
-  Users, 
-  TrendingUp,
-  ArrowRight,
-  Leaf,
-  MapPin,
-  Package
-} from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import ProductCard from "@/components/ProductCard";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Star, ShoppingCart, Truck, Shield, Users, TrendingUp } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock data for featured products
   const featuredProducts = [
     {
-      id: '1',
-      name: 'Organic Tomatoes',
+      id: "featured-1",
+      name: "Organic Tomatoes",
       price: 45,
-      unit: 'kg',
+      unit: "kg",
       quantity: 150,
-      category: 'Vegetables',
-      description: 'Fresh organic tomatoes grown without pesticides. Perfect for cooking and salads.',
-      image: '/placeholder.svg',
+      category: "Vegetables",
+      description: "Fresh organic tomatoes grown without pesticides",
+      image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
       farmer: {
-        name: 'Ravi Kumar',
-        location: 'Bangalore, Karnataka',
+        name: "Green Valley Farm",
+        location: "Maharashtra",
         rating: 4.8
       },
-      harvestDate: '2024-06-25',
+      harvestDate: "2024-01-15",
       organic: true
     },
     {
-      id: '2',
-      name: 'Basmati Rice',
-      price: 120,
-      unit: 'kg',
-      quantity: 500,
-      category: 'Grains',
-      description: 'Premium quality Basmati rice directly from Punjab farms.',
-      image: '/placeholder.svg',
+      id: "featured-2",
+      name: "Fresh Spinach",
+      price: 30,
+      unit: "kg",
+      quantity: 80,
+      category: "Vegetables",
+      description: "Crisp and fresh spinach leaves packed with nutrients",
+      image: "https://images.unsplash.com/photo-1576045057995-568f588f8dfd?w=400",
       farmer: {
-        name: 'Harpreet Singh',
-        location: 'Amritsar, Punjab',
-        rating: 4.9
+        name: "Green Valley Farm",
+        location: "Maharashtra",
+        rating: 4.8
       },
-      harvestDate: '2024-06-20',
-      organic: false
+      harvestDate: "2024-01-14",
+      organic: true
     },
     {
-      id: '3',
-      name: 'Fresh Mangoes',
-      price: 80,
-      unit: 'dozen',
+      id: "featured-3",
+      name: "Basmati Rice",
+      price: 120,
+      unit: "kg",
       quantity: 200,
-      category: 'Fruits',
-      description: 'Sweet Alphonso mangoes from Maharashtra orchards.',
-      image: '/placeholder.svg',
+      category: "Grains",
+      description: "Premium quality aged basmati rice",
+      image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400",
       farmer: {
-        name: 'Suresh Patil',
-        location: 'Pune, Maharashtra',
+        name: "Golden Fields",
+        location: "Punjab",
         rating: 4.7
       },
-      harvestDate: '2024-06-22',
-      organic: true
+      harvestDate: "2024-01-10",
+      organic: false
     }
   ];
 
   const stats = [
-    { icon: Users, label: 'Active Farmers', value: '2,500+' },
-    { icon: Package, label: 'Products Listed', value: '15,000+' },
-    { icon: TrendingUp, label: 'Orders Completed', value: '50,000+' },
-    { icon: MapPin, label: 'Cities Covered', value: '25+' }
+    { icon: Users, label: "Active Farmers", value: "1000+", color: "text-green-600" },
+    { icon: ShoppingCart, label: "Products Available", value: "5000+", color: "text-blue-600" },
+    { icon: Truck, label: "Deliveries Made", value: "10,000+", color: "text-purple-600" },
+    { icon: Star, label: "Customer Rating", value: "4.8/5", color: "text-yellow-600" }
+  ];
+
+  const features = [
+    {
+      icon: Shield,
+      title: "Quality Assured",
+      description: "All products are quality checked before delivery"
+    },
+    {
+      icon: Truck,
+      title: "Fast Delivery",
+      description: "Fresh produce delivered within 24 hours"
+    },
+    {
+      icon: Star,
+      title: "Best Prices",
+      description: "Direct from farmers means better prices for you"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-600 to-green-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Direct from Farm to Your Table
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-green-100">
-              Connect directly with Indian farmers. Get fresh produce, grains, and dairy 
-              without middlemen. Support local agriculture.
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Search for fresh vegetables, grains, fruits..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 text-lg border-0 rounded-full bg-white text-gray-900"
-                />
-                <Button 
-                  size="lg"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 rounded-full px-8"
-                  onClick={() => navigate(`/marketplace?search=${searchQuery}`)}
-                >
-                  Search
-                </Button>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                variant="secondary"
-                className="text-green-800 bg-white hover:bg-green-50"
-                onClick={() => navigate('/marketplace')}
-              >
-                Browse Marketplace
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-green-800"
-                onClick={() => navigate('/register')}
-              >
-                Join as Farmer
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Choose AgriDirect?</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Revolutionizing agriculture by connecting farmers directly with buyers
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Truck className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Direct Delivery</h3>
-                <p className="text-gray-600">Fresh produce delivered directly from farms to your doorstep</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-blue-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Quality Assured</h3>
-                <p className="text-gray-600">Verified farmers and quality-checked produce for your peace of mind</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-orange-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Support Farmers</h3>
-                <p className="text-gray-600">Eliminate middlemen and ensure farmers get fair prices</p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Organic Options</h3>
-                <p className="text-gray-600">Wide selection of organic and pesticide-free produce</p>
-              </CardContent>
-            </Card>
+      <section className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold mb-6">
+            Fresh From Farm to Your Table
+          </h1>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Connect directly with farmers and get the freshest produce delivered to your doorstep. 
+            Supporting local agriculture, one order at a time.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-white text-green-600 hover:bg-gray-100"
+              onClick={() => navigate('/marketplace')}
+            >
+              <ShoppingCart className="mr-2 h-5 w-5" />
+              Shop Now
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white hover:text-green-600"
+              onClick={() => navigate('/farmers')}
+            >
+              Meet Our Farmers
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-green-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, index) => {
-              const Icon = stat.icon;
+              const IconComponent = stat.icon;
               return (
-                <div key={index} className="flex flex-col items-center">
-                  <Icon className="w-12 h-12 mb-4 text-green-200" />
-                  <div className="text-3xl font-bold mb-2">{stat.value}</div>
-                  <div className="text-green-100">{stat.label}</div>
+                <div key={index} className="text-center">
+                  <IconComponent className={`h-12 w-12 ${stat.color} mx-auto mb-3`} />
+                  <h3 className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</h3>
+                  <p className="text-gray-600">{stat.label}</p>
                 </div>
               );
             })}
@@ -219,113 +144,87 @@ const Index = () => {
 
       {/* Featured Products */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
-              <p className="text-xl text-gray-600">Fresh picks from our verified farmers</p>
-            </div>
-            <Button 
-              variant="outline" 
-              className="text-green-600 border-green-600 hover:bg-green-50"
-              onClick={() => navigate('/marketplace')}
-            >
-              View All Products
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Products</h2>
+            <p className="text-xl text-gray-600">Fresh picks from our trusted farmers</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             {featuredProducts.map((product) => (
-              <ProductCard 
-                key={product.id} 
+              <ProductCard
+                key={product.id}
                 product={product}
-                onAddToCart={(productId) => {
-                  console.log(`Added product ${productId} to cart`);
-                  // Add to cart logic here
-                }}
+                showFarmerInfo={true}
               />
             ))}
+          </div>
+          
+          <div className="text-center">
+            <Button 
+              size="lg" 
+              onClick={() => navigate('/marketplace')}
+              className="bg-green-600 hover:bg-green-700"
+            >
+              View All Products
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+            Why Choose AgriDirect?
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <Card key={index} className="text-center border-green-100 hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <IconComponent className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gray-900 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Join thousands of farmers and buyers who trust AgriDirect for their agricultural needs
+      <section className="py-16 bg-green-50">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Ready to Start Shopping?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Join thousands of customers who trust AgriDirect for their fresh produce needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              size="lg"
+              size="lg" 
               className="bg-green-600 hover:bg-green-700"
-              onClick={() => navigate('/register?role=farmer')}
+              onClick={() => navigate('/register')}
             >
-              Register as Farmer
+              Sign Up Now
             </Button>
             <Button 
-              size="lg"
+              size="lg" 
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-gray-900"
-              onClick={() => navigate('/register?role=buyer')}
+              onClick={() => navigate('/marketplace')}
             >
-              Register as Buyer
+              Browse Products
             </Button>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-gray-300 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">A</span>
-                </div>
-                <span className="text-xl font-bold text-white">AgriDirect</span>
-              </div>
-              <p className="text-gray-400">
-                Connecting farmers directly with buyers for a sustainable agricultural future.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="text-white font-semibold mb-4">For Farmers</h3>
-              <ul className="space-y-2">
-                <li><Link to="/register?role=farmer" className="hover:text-green-400">Join as Farmer</Link></li>
-                <li><Link to="/farmer-guide" className="hover:text-green-400">Selling Guide</Link></li>
-                <li><Link to="/pricing" className="hover:text-green-400">Pricing</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-white font-semibold mb-4">For Buyers</h3>
-              <ul className="space-y-2">
-                <li><Link to="/marketplace" className="hover:text-green-400">Browse Products</Link></li>
-                <li><Link to="/register?role=buyer" className="hover:text-green-400">Create Account</Link></li>
-                <li><Link to="/bulk-orders" className="hover:text-green-400">Bulk Orders</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="text-white font-semibold mb-4">Support</h3>
-              <ul className="space-y-2">
-                <li><Link to="/help" className="hover:text-green-400">Help Center</Link></li>
-                <li><Link to="/contact" className="hover:text-green-400">Contact Us</Link></li>
-                <li><Link to="/terms" className="hover:text-green-400">Terms of Service</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center">
-            <p>&copy; 2024 AgriDirect. All rights reserved. Empowering Indian Agriculture.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

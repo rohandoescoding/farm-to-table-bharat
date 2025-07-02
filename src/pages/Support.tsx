@@ -1,3 +1,5 @@
+
+import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Phone, Mail, MessageCircle, Clock, HelpCircle, BookOpen, Package } from "lucide-react";
 
 const Support = () => {
+  const navigate = useNavigate();
+
   const supportOptions = [
     {
       icon: Phone,
@@ -60,6 +64,25 @@ const Support = () => {
       ]
     }
   ];
+
+  const handleQuickAction = (action: string) => {
+    switch (action) {
+      case 'track':
+        navigate('/orders');
+        break;
+      case 'history':
+        navigate('/orders');
+        break;
+      case 'return':
+        navigate('/orders');
+        break;
+      case 'account':
+        navigate('/profile');
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -211,19 +234,35 @@ const Support = () => {
                 <CardTitle className="text-lg">⚡ Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction('track')}
+                >
                   <Package className="h-4 w-4 mr-2" />
                   Track My Order
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction('history')}
+                >
                   <Clock className="h-4 w-4 mr-2" />
                   Order History
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction('return')}
+                >
                   <BookOpen className="h-4 w-4 mr-2" />
                   Return/Refund
                 </Button>
-                <Button variant="outline" className="w-full justify-start">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => handleQuickAction('account')}
+                >
                   <HelpCircle className="h-4 w-4 mr-2" />
                   Account Issues
                 </Button>
@@ -261,19 +300,39 @@ const Support = () => {
                 <CardTitle className="text-lg">📚 Help Resources</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button variant="ghost" className="w-full justify-start text-green-700 hover:bg-green-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-green-700 hover:bg-green-100"
+                  onClick={() => navigate('/marketplace')}
+                >
                   How to Place Orders
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-green-700 hover:bg-green-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-green-700 hover:bg-green-100"
+                  onClick={() => navigate('/checkout')}
+                >
                   Payment Guidelines
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-green-700 hover:bg-green-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-green-700 hover:bg-green-100"
+                  onClick={() => navigate('/delivery')}
+                >
                   Delivery Information
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-green-700 hover:bg-green-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-green-700 hover:bg-green-100"
+                  onClick={() => navigate('/farmers')}
+                >
                   Quality Standards
                 </Button>
-                <Button variant="ghost" className="w-full justify-start text-green-700 hover:bg-green-100">
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-green-700 hover:bg-green-100"
+                  onClick={() => navigate('/orders')}
+                >
                   Return Policy
                 </Button>
               </CardContent>
