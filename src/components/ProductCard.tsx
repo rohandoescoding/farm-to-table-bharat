@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,13 +32,19 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, onAddToCart, showFarmerInfo = true }: ProductCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click when adding to cart
     if (onAddToCart) {
       setIsLoading(true);
       await onAddToCart(product.id);
       setIsLoading(false);
     }
+  };
+
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
   };
 
   const getCategoryColor = (category: string) => {
@@ -52,7 +59,10 @@ const ProductCard = ({ product, onAddToCart, showFarmerInfo = true }: ProductCar
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-green-100">
+    <Card 
+      className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-green-100 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative">
         <img 
           src={product.image} 

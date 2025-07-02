@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -58,6 +59,7 @@ const EnhancedProductCard = ({
   showFarmerInfo = true 
 }: EnhancedProductCardProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const navigate = useNavigate();
 
   const hasQualityBadge = product.farmer.reputation.averageRating >= 4.5 && 
                          product.farmer.reputation.fulfillmentRate >= 95 && 
@@ -66,8 +68,25 @@ const EnhancedProductCard = ({
   const isHighlyRated = product.aggregateScore >= 4.5;
   const hasVideos = product.videos && product.videos.length > 0;
 
+  const handleCardClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddToCart(product.id);
+  };
+
+  const handleFlagProduct = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onFlagProduct?.(product.id);
+  };
+
   return (
-    <Card className="group hover:shadow-lg transition-all duration-300 border-green-100">
+    <Card 
+      className="group hover:shadow-lg transition-all duration-300 border-green-100 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative">
         {/* Product Image */}
         <div className="aspect-square overflow-hidden rounded-t-lg">
@@ -109,7 +128,7 @@ const EnhancedProductCard = ({
             <Button
               size="sm"
               variant="secondary"
-              onClick={() => onFlagProduct?.(product.id)}
+              onClick={handleFlagProduct}
               className="text-red-600 hover:text-red-700"
             >
               <Flag className="w-3 h-3" />
@@ -162,7 +181,10 @@ const EnhancedProductCard = ({
             </p>
             {product.description.length > 80 && (
               <button
-                onClick={() => setShowFullDescription(!showFullDescription)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowFullDescription(!showFullDescription);
+                }}
                 className="text-green-600 text-xs hover:underline mt-1"
               >
                 {showFullDescription ? 'Show less' : 'Show more'}
@@ -189,7 +211,7 @@ const EnhancedProductCard = ({
 
           {/* Action Button */}
           <Button
-            onClick={() => onAddToCart(product.id)}
+            onClick={handleAddToCart}
             disabled={product.quantity === 0}
             className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-300"
           >
