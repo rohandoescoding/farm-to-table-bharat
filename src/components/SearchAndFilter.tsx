@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +13,7 @@ interface SearchAndFilterProps {
   onFilter: (filters: FilterOptions) => void;
   categories: string[];
   locations: string[];
+  initialCategory?: string;
 }
 
 interface FilterOptions {
@@ -22,16 +23,26 @@ interface FilterOptions {
   sortBy: string;
 }
 
-const SearchAndFilter = ({ onSearch, onFilter, categories, locations }: SearchAndFilterProps) => {
+const SearchAndFilter = ({ onSearch, onFilter, categories, locations, initialCategory }: SearchAndFilterProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
-    category: "",
+    category: initialCategory || "",
     location: "",
     priceRange: [0, 1000],
     sortBy: "newest"
   });
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  // Update filters when initialCategory changes
+  useEffect(() => {
+    if (initialCategory && initialCategory !== filters.category) {
+      const newFilters = { ...filters, category: initialCategory };
+      setFilters(newFilters);
+      onFilter(newFilters);
+      updateActiveFilters(newFilters);
+    }
+  }, [initialCategory]);
 
   const handleSearch = () => {
     onSearch(searchQuery);
@@ -133,7 +144,10 @@ const SearchAndFilter = ({ onSearch, onFilter, categories, locations }: SearchAn
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <label className="text-sm font-medium mb-2 block">Category</label>
-                <Select value={filters.category} onValueChange={(value) => handleFilterChange("category", value)}>
+                <Select 
+                  value={filters.category} 
+                  onValueChange={(value) => handleFilterChange("category", value)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="All categories" />
                   </SelectTrigger>

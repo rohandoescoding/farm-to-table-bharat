@@ -1,3 +1,4 @@
+
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -106,7 +107,7 @@ const Categories = () => {
                     </div>
                   </div>
 
-                  <Link to={`/marketplace?category=${category.id}`}>
+                  <Link to={`/marketplace?category=${category.name}`}>
                     <Button className="w-full bg-green-600 hover:bg-green-700">
                       Browse {category.name}
                     </Button>

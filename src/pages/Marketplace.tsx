@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import SearchAndFilter from "@/components/SearchAndFilter";
@@ -13,6 +15,7 @@ interface FilterOptions {
 }
 
 const Marketplace = () => {
+  const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({
     category: "",
@@ -21,12 +24,20 @@ const Marketplace = () => {
     sortBy: "newest"
   });
 
-  // Mock data with diverse products
+  // Initialize category filter from URL params
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      setFilters(prev => ({ ...prev, category: categoryParam }));
+    }
+  }, [searchParams]);
+
+  // Mock data with properly categorized products
   const categories = ["Vegetables", "Fruits", "Grains", "Herbs", "Seeds", "Dairy"];
   const locations = ["Maharashtra", "Karnataka", "Punjab", "Tamil Nadu", "Gujarat", "Rajasthan"];
   
   const products = [
-    // Vegetables
+    // Vegetables - properly categorized
     {
       id: "1",
       name: "Organic Tomatoes",
@@ -78,8 +89,42 @@ const Marketplace = () => {
       harvestDate: "2024-01-13",
       organic: true
     },
+    {
+      id: "14",
+      name: "Fresh Carrots",
+      price: 35,
+      unit: "kg",
+      quantity: 90,
+      category: "Vegetables",
+      description: "Crunchy orange carrots rich in beta-carotene",
+      image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400",
+      farmer: {
+        name: "Root Vegetables Co",
+        location: "Punjab",
+        rating: 4.6
+      },
+      harvestDate: "2024-01-13",
+      organic: true
+    },
+    {
+      id: "15",
+      name: "Red Onions",
+      price: 25,
+      unit: "kg",
+      quantity: 180,
+      category: "Vegetables",
+      description: "Fresh red onions with strong flavor",
+      image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400",
+      farmer: {
+        name: "Spice Garden",
+        location: "Karnataka",
+        rating: 4.5
+      },
+      harvestDate: "2024-01-11",
+      organic: false
+    },
     
-    // Fruits
+    // Fruits - properly categorized
     {
       id: "4",
       name: "Organic Apples",
@@ -131,8 +176,25 @@ const Marketplace = () => {
       harvestDate: "2024-01-16",
       organic: true
     },
+    {
+      id: "16",
+      name: "Fresh Bananas",
+      price: 60,
+      unit: "dozen",
+      quantity: 150,
+      category: "Fruits",
+      description: "Ripe yellow bananas packed with potassium",
+      image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400",
+      farmer: {
+        name: "Banana Republic",
+        location: "Tamil Nadu",
+        rating: 4.5
+      },
+      harvestDate: "2024-01-15",
+      organic: false
+    },
     
-    // Grains
+    // Grains - properly categorized
     {
       id: "7",
       name: "Premium Basmati Rice",
@@ -185,7 +247,7 @@ const Marketplace = () => {
       organic: true
     },
     
-    // Herbs
+    // Herbs - properly categorized
     {
       id: "10",
       name: "Fresh Basil",
@@ -221,7 +283,7 @@ const Marketplace = () => {
       organic: true
     },
     
-    // Seeds
+    // Seeds - properly categorized
     {
       id: "12",
       name: "Sunflower Seeds",
@@ -240,7 +302,7 @@ const Marketplace = () => {
       organic: false
     },
     
-    // Dairy
+    // Dairy - properly categorized
     {
       id: "13",
       name: "Farm Fresh Milk",
@@ -268,7 +330,7 @@ const Marketplace = () => {
     setFilters(newFilters);
   };
 
-  // Filter and sort products based on current filters and search
+  // Enhanced filtering with strict category matching
   const filteredProducts = products
     .filter(product => {
       const matchesSearch = searchQuery === "" || 
@@ -276,6 +338,7 @@ const Marketplace = () => {
         product.farmer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         product.farmer.location.toLowerCase().includes(searchQuery.toLowerCase());
       
+      // Strict category matching - case sensitive and exact match
       const matchesCategory = filters.category === "" || product.category === filters.category;
       const matchesLocation = filters.location === "" || product.farmer.location === filters.location;
       const matchesPrice = product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1];
@@ -292,6 +355,11 @@ const Marketplace = () => {
       }
     });
 
+  // Get category counts for validation
+  const getCategoryCount = (categoryName: string) => {
+    return products.filter(product => product.category === categoryName).length;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -301,6 +369,13 @@ const Marketplace = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">🛒 Marketplace</h1>
           <p className="text-gray-600">Discover fresh, local produce directly from farmers</p>
+          {filters.category && (
+            <div className="mt-2">
+              <Badge className="bg-green-100 text-green-800">
+                Category: {filters.category} ({getCategoryCount(filters.category)} products)
+              </Badge>
+            </div>
+          )}
         </div>
 
         {/* Search and Filter */}
@@ -321,6 +396,7 @@ const Marketplace = () => {
                 <div>
                   <p className="text-lg font-semibold">
                     {filteredProducts.length} Products Found
+                    {filters.category && ` in ${filters.category}`}
                   </p>
                   {searchQuery && (
                     <p className="text-sm text-gray-600">
@@ -355,16 +431,21 @@ const Marketplace = () => {
               <div className="text-gray-500">
                 <p className="text-lg font-medium mb-2">No products found</p>
                 <p>Try adjusting your search criteria or filters</p>
+                {filters.category && (
+                  <p className="text-sm mt-2">
+                    No products available in "{filters.category}" category
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>
         )}
 
-        {/* Featured Categories */}
+        {/* Category Validation Section - Debug Info */}
         <div className="mt-12">
           <Card>
             <CardHeader>
-              <CardTitle>Shop by Category</CardTitle>
+              <CardTitle>Category Distribution</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -383,6 +464,9 @@ const Marketplace = () => {
                       {category === 'Dairy' && '🥛'}
                     </div>
                     <p className="text-sm font-medium">{category}</p>
+                    <Badge className="mt-1" variant="outline">
+                      {getCategoryCount(category)} items
+                    </Badge>
                   </button>
                 ))}
               </div>
