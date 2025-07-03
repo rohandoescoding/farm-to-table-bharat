@@ -34,15 +34,21 @@ const SearchAndFilter = ({ onSearch, onFilter, categories, locations, initialCat
   });
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
-  // Update filters when initialCategory changes
+  // Update filters when initialCategory changes and trigger the filter callback
   useEffect(() => {
-    if (initialCategory && initialCategory !== filters.category) {
+    if (initialCategory) {
       const newFilters = { ...filters, category: initialCategory };
       setFilters(newFilters);
       onFilter(newFilters);
       updateActiveFilters(newFilters);
     }
   }, [initialCategory]);
+
+  // Initial filter call on mount to ensure proper filtering
+  useEffect(() => {
+    onFilter(filters);
+    updateActiveFilters(filters);
+  }, []);
 
   const handleSearch = () => {
     onSearch(searchQuery);

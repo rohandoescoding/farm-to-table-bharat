@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -23,11 +22,13 @@ const Marketplace = () => {
     priceRange: [0, 1000],
     sortBy: "newest"
   });
+  const [initialCategory, setInitialCategory] = useState<string>("");
 
   // Initialize category filter from URL params
   useEffect(() => {
     const categoryParam = searchParams.get('category');
     if (categoryParam) {
+      setInitialCategory(categoryParam);
       setFilters(prev => ({ ...prev, category: categoryParam }));
     }
   }, [searchParams]);
@@ -385,6 +386,7 @@ const Marketplace = () => {
             onFilter={handleFilter}
             categories={categories}
             locations={locations}
+            initialCategory={initialCategory}
           />
         </div>
 
