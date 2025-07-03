@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
+import { Eye, EyeOff } from 'lucide-react';
+import PasswordStrength from '@/components/PasswordStrength';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,6 +25,9 @@ const Register = () => {
     location: '',
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordStrong, setPasswordStrong] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -38,11 +43,20 @@ const Register = () => {
     });
   };
 
+  const handlePasswordStrengthChange = (strength: number, isStrong: boolean) => {
+    setPasswordStrong(isStrong);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
+      return;
+    }
+
+    if (!passwordStrong) {
+      toast.error('Please create a stronger password');
       return;
     }
 
@@ -157,30 +171,60 @@ const Register = () => {
 
               <div>
                 <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className="mt-1"
-                  placeholder="Enter your password"
+                <div className="relative mt-1">
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="Enter your password"
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+                <PasswordStrength 
+                  password={formData.password} 
+                  onStrengthChange={handlePasswordStrengthChange}
                 />
               </div>
 
               <div>
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className="mt-1"
-                  placeholder="Confirm your password"
-                />
+                <div className="relative mt-1">
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    required
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    placeholder="Confirm your password"
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <Button

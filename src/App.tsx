@@ -26,6 +26,9 @@ import Deals from "./pages/Deals";
 import WhatsNew from "./pages/WhatsNew";
 import Farmers from "./pages/Farmers";
 import FarmerDetail from "./pages/FarmerDetail";
+import BuyerOrders from "./pages/BuyerOrders";
+import BuyerSettings from "./pages/BuyerSettings";
+import FarmerProducts from "./pages/FarmerProducts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -49,10 +52,13 @@ function App() {
             <Route path="/orders/:id" element={<Order />} />
             <Route path="/support" element={<Support />} />
             <Route path="/farmer-dashboard" element={<FarmerDashboard />} />
-            <Route path="/add-product" element={<AddProduct />} />
+            <Route path="/farmer/add-product" element={<AddProduct />} />
+            <Route path="/farmer/products" element={<FarmerProducts />} />
             <Route path="/manage-products" element={<ManageProducts />} />
             <Route path="/farmer-earnings" element={<FarmerEarnings />} />
             <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
+            <Route path="/buyer/orders" element={<BuyerOrders />} />
+            <Route path="/buyer/settings" element={<BuyerSettings />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/delivery" element={<Delivery />} />
             <Route path="/deals" element={<Deals />} />

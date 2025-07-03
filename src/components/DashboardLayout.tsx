@@ -30,26 +30,26 @@ const DashboardLayout = ({ children, userRole }: DashboardLayoutProps) => {
           { icon: Home, label: 'Dashboard', href: '/farmer-dashboard' },
           { icon: Package, label: 'My Products', href: '/farmer/products' },
           { icon: Plus, label: 'Add Product', href: '/farmer/add-product' },
-          { icon: ListChecks, label: 'Orders', href: '/farmer/orders' },
-          { icon: TrendingUp, label: 'Analytics', href: '/farmer/analytics' },
-          { icon: Settings, label: 'Settings', href: '/farmer/settings' }
+          { icon: ListChecks, label: 'Orders', href: '/orders' },
+          { icon: TrendingUp, label: 'Earnings', href: '/farmer-earnings' },
+          { icon: Settings, label: 'Settings', href: '/profile' }
         ];
       case 'buyer':
         return [
           { icon: Home, label: 'Dashboard', href: '/buyer-dashboard' },
           { icon: ShoppingCart, label: 'My Orders', href: '/buyer/orders' },
-          { icon: Package, label: 'Wishlist', href: '/buyer/wishlist' },
+          { icon: Package, label: 'Marketplace', href: '/marketplace' },
           { icon: Settings, label: 'Settings', href: '/buyer/settings' }
         ];
       case 'admin':
         return [
           { icon: Home, label: 'Dashboard', href: '/admin-dashboard' },
-          { icon: Users, label: 'Farmers', href: '/admin/farmers' },
-          { icon: Package, label: 'Products', href: '/admin/products' },
-          { icon: ShoppingCart, label: 'Orders', href: '/admin/orders' },
-          { icon: Shield, label: 'Approvals', href: '/admin/approvals' },
-          { icon: BarChart3, label: 'Analytics', href: '/admin/analytics' },
-          { icon: Settings, label: 'Settings', href: '/admin/settings' }
+          { icon: Users, label: 'Farmers', href: '/farmers' },
+          { icon: Package, label: 'Products', href: '/marketplace' },
+          { icon: ShoppingCart, label: 'Orders', href: '/orders' },
+          { icon: Shield, label: 'Support', href: '/support' },
+          { icon: BarChart3, label: 'Analytics', href: '/admin-dashboard' },
+          { icon: Settings, label: 'Settings', href: '/profile' }
         ];
       default:
         return [];

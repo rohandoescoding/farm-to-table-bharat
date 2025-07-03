@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,20 +8,20 @@ import { ShoppingCart, Package, Heart, Star, TrendingUp, MapPin } from "lucide-r
 const BuyerDashboard = () => {
   // Mock data for demonstration
   const recentOrders = [
-    { id: "ORD-001", date: "2024-01-15", status: "Delivered", total: "$45.99", items: 3 },
-    { id: "ORD-002", date: "2024-01-12", status: "In Transit", total: "$32.50", items: 2 },
-    { id: "ORD-003", date: "2024-01-08", status: "Processing", total: "$78.25", items: 5 },
+    { id: "ORD-001", date: "2024-01-15", status: "Delivered", total: "₹1,247.50", items: 3 },
+    { id: "ORD-002", date: "2024-01-12", status: "In Transit", total: "₹890.25", items: 2 },
+    { id: "ORD-003", date: "2024-01-08", status: "Processing", total: "₹2,156.75", items: 5 },
   ];
 
   const favoriteProducts = [
-    { id: 1, name: "Organic Tomatoes", farmer: "Green Valley Farm", price: "$4.99/lb", rating: 4.8, location: "Maharashtra" },
-    { id: 2, name: "Fresh Basil", farmer: "Herb Haven", price: "$2.50/bunch", rating: 4.9, location: "Karnataka" },
-    { id: 3, name: "Free-Range Eggs", farmer: "Sunny Side Farm", price: "$6.99/dozen", rating: 4.7, location: "Punjab" },
+    { id: 1, name: "Organic Tomatoes", farmer: "Green Valley Farm", price: "₹149/kg", rating: 4.8, location: "Maharashtra" },
+    { id: 2, name: "Fresh Basil", farmer: "Herb Haven", price: "₹75/bunch", rating: 4.9, location: "Karnataka" },
+    { id: 3, name: "Free-Range Eggs", farmer: "Sunny Side Farm", price: "₹210/dozen", rating: 4.7, location: "Punjab" },
   ];
 
   const recommendedProducts = [
-    { id: 4, name: "Organic Spinach", farmer: "Green Fields", price: "$3.99/lb", rating: 4.8, discount: 15 },
-    { id: 5, name: "Fresh Carrots", farmer: "Root Vegetables Co", price: "$2.99/lb", rating: 4.6, discount: 10 },
+    { id: 4, name: "Organic Spinach", farmer: "Green Fields", price: "₹120/kg", rating: 4.8, discount: 15 },
+    { id: 5, name: "Fresh Carrots", farmer: "Root Vegetables Co", price: "₹90/kg", rating: 4.6, discount: 10 },
   ];
 
   const getStatusColor = (status: string) => {
@@ -62,7 +61,7 @@ const BuyerDashboard = () => {
               <ShoppingCart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$1,247.50</div>
+              <div className="text-2xl font-bold">₹37,425</div>
               <p className="text-xs text-green-600">+12% from last month</p>
             </CardContent>
           </Card>
@@ -84,7 +83,7 @@ const BuyerDashboard = () => {
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$156.75</div>
+              <div className="text-2xl font-bold">₹4,702</div>
               <p className="text-xs text-green-600">Through deals & discounts</p>
             </CardContent>
           </Card>

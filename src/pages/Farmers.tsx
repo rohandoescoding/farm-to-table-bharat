@@ -31,8 +31,8 @@ interface Farmer {
 const Farmers = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [locationFilter, setLocationFilter] = useState('');
-  const [specialityFilter, setSpecialityFilter] = useState('');
+  const [locationFilter, setLocationFilter] = useState('all');
+  const [specialityFilter, setSpecialityFilter] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
 
   // Mock farmers data - in real app this would come from API
@@ -139,8 +139,8 @@ const Farmers = () => {
         farmer.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
         farmer.speciality.some(spec => spec.toLowerCase().includes(searchQuery.toLowerCase()));
       
-      const matchesLocation = locationFilter === '' || farmer.state === locationFilter;
-      const matchesSpeciality = specialityFilter === '' || farmer.speciality.includes(specialityFilter);
+      const matchesLocation = locationFilter === 'all' || farmer.state === locationFilter;
+      const matchesSpeciality = specialityFilter === 'all' || farmer.speciality.includes(specialityFilter);
       
       return matchesSearch && matchesLocation && matchesSpeciality;
     })
@@ -188,7 +188,7 @@ const Farmers = () => {
                   <SelectValue placeholder="All States" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All States</SelectItem>
+                  <SelectItem value="all">All States</SelectItem>
                   {states.map(state => (
                     <SelectItem key={state} value={state}>{state}</SelectItem>
                   ))}
@@ -200,7 +200,7 @@ const Farmers = () => {
                   <SelectValue placeholder="All Specialities" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Specialities</SelectItem>
+                  <SelectItem value="all">All Specialities</SelectItem>
                   {specialities.map(spec => (
                     <SelectItem key={spec} value={spec}>{spec}</SelectItem>
                   ))}
